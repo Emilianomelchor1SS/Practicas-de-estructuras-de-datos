@@ -1,1 +1,0 @@
-Este sera el archivo en el que se trabajara para toda la practica sobre lo basico de c++, al menos en cada nivel debe existir un commit donde explique que nivel y que cambios se generaron de manera general ej. " Nivel 1, se creo el archivo, la estructura base y las variables para comenzar. "    El entregable es el enlace a su repositorio.
