@@ -1,18 +1,20 @@
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
 
 int main() {
     int opcion;
     string nombre_estudiante;
     int edad_estudiante;
-    float calificacion1, calificacion2, calificacion3;
+    int cantidad_calificaciones;
+    vector<float> calificaciones;
     bool estudianteRegistrado = false;
 
     while (true) {
         cout << "\n===== Sistema de Calificaciones =====" << endl;
         cout << "1. Registrar estudiante" << endl;
-        cout << "2. Mostrar estudiantes" << endl;
+        cout << "2. Ver información del programa" << endl;
         cout << "3. Salir" << endl;
         cout << "Seleccione una opción: ";
         cin >> opcion;
@@ -26,7 +28,7 @@ int main() {
                 if (nombre_estudiante.find_first_of("0123456789") != string::npos) {
                     cout << "Ingrese un nombre válido." << endl;
                     break;
-                }// esta parte es prevencion de que el nombre no tenga algun numero
+                }
 
                 cout << "Ingrese la edad del estudiante: ";
                 cin >> edad_estudiante;
@@ -35,25 +37,28 @@ int main() {
                     break;
                 }
 
-                cout << "Ingrese la calificacion 1: ";
-                cin >> calificacion1;
-                if (calificacion1 < 0 || calificacion1 > 10) {
-                    cout << "La calificacion debe estar entre 0 y 10." << endl;
+                cout << "Cuantas calificaciones desea ingresar?: ";
+                cin >> cantidad_calificaciones;
+
+                if (cantidad_calificaciones <= 0) {
+                    cout << "Debe ingresar al menos una calificación." << endl;
                     break;
                 }
 
-                cout << "Ingrese la calificacion 2: ";
-                cin >> calificacion2;
-                if (calificacion2 < 0 || calificacion2 > 10) {
-                    cout << "La calificacion debe estar entre 0 y 10." << endl;
-                    break;
-                }
+                calificaciones.clear();
 
-                cout << "Ingrese la calificacion 3: ";
-                cin >> calificacion3;
-                if (calificacion3 < 0 || calificacion3 > 10) {
-                    cout << "La calificacion debe estar entre 0 y 10." << endl;
-                    break;
+                for (int i = 0; i < cantidad_calificaciones; i++) {
+                    float calificacion;
+                    cout << "Ingrese la calificacion " << i + 1 << ": ";
+                    cin >> calificacion;
+
+                    if (calificacion < 0 || calificacion > 10) {
+                        cout << "La calificacion debe estar entre 0 y 10." << endl;
+                        i--;
+                        continue;
+                    }
+
+                    calificaciones.push_back(calificacion);
                 }
 
                 estudianteRegistrado = true;
@@ -67,7 +72,12 @@ int main() {
                     break;
                 }
 
-                float promedio = (calificacion1 + calificacion2 + calificacion3) / 3;
+                float suma = 0;
+                for (float calificacion : calificaciones) {
+                    suma += calificacion;
+                }
+
+                float promedio = suma / calificaciones.size();
                 cout << "El promedio del estudiante " << nombre_estudiante << " es: " << promedio << endl;
                 break;
             }
