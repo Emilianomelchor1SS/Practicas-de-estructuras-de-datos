@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 using namespace std;
+#include <limits>// Limpiar el estado de error y descartar la entrada inválida
 
 int main() {
     int opcion;
@@ -10,38 +11,71 @@ int main() {
     int cantidad_calificaciones;
     vector<float> calificaciones;
     bool estudianteRegistrado = false;
+    int repeticiones = 0; // Contador de repeticiones
 
     while (true) {
+        do{
         cout << "\n===== Sistema de Calificaciones =====" << endl;
         cout << "1. Registrar estudiante" << endl;
         cout << "2. Ver información del programa" << endl;
         cout << "3. Salir" << endl;
         cout << "Seleccione una opción: ";
-        cin >> opcion;
+         cin >> opcion;
+        }while( opcion < 1 || opcion > 3); 
+       
 
         switch (opcion) {
             case 1: {
-                cout << "Ingrese el nombre del estudiante: ";
                 cin.ignore();
-                getline(cin, nombre_estudiante);
+                do {
+                    cout << "Ingrese el nombre del estudiante: ";
+                  
+                    getline(cin, nombre_estudiante);
 
-                if (nombre_estudiante.find_first_of("0123456789") != string::npos) {
-                    cout << "Ingrese un nombre válido." << endl;
-                    break;
-                }
+                    if (nombre_estudiante.find_first_of("0123456789") != string::npos) {
+                        cout << "-----------------------------Ingrese un nombre válido ----------------------------" << endl;
+                        repeticiones++;
+                        if (repeticiones >= 3) {
+                            cout << "-----------------------------Se ha excedido el número de intentos.-----------------------------" << endl;
+                            break;
+                           
+                        } 
+                    }
+                }while (nombre_estudiante.find_first_of("0123456789") != string::npos && repeticiones < 3);
+                    if (repeticiones >= 3) {
+                        repeticiones = 0; 
+                        break;           
+                        }
+                    
+                
+                repeticiones = 0; 
+              
+                do{    cout << "Ingrese la edad del estudiante: ";
+                    cin >> edad_estudiante;
+                    if (edad_estudiante < 0 || edad_estudiante > 120|| cin.fail() ) {
+                        cout << "-----------------------------La edad debe estar entre 0 y 120.-----------------------------" << endl;
+                        cin.clear();
+                      cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                        repeticiones++;
+                        edad_estudiante = -1; // Reiniciar la edad para que el ciclo continúe
+                        if (repeticiones >= 3) {
+                            cout << "-----------------------------Se ha excedido el número de intentos.-----------------------------" << endl;
+                            break;
+                        }
 
-                cout << "Ingrese la edad del estudiante: ";
-                cin >> edad_estudiante;
-                if (edad_estudiante < 0 || edad_estudiante > 120) {
-                    cout << "La edad debe estar entre 0 y 120." << endl;
-                    break;
+
+                    }
+                }while (edad_estudiante < 0 || edad_estudiante > 120|| cin.fail());
+                if (repeticiones >= 3) {
+                    repeticiones = 0; 
+                    break;           
                 }
 
                 cout << "Cuantas calificaciones desea ingresar?: ";
                 cin >> cantidad_calificaciones;
 
                 if (cantidad_calificaciones <= 0) {
-                    cout << "Debe ingresar al menos una calificación." << endl;
+                    cout << "-----------------------------Debe ingresar al menos una calificación.-----------------------------" << endl;
                     break;
                 }
 
@@ -53,7 +87,7 @@ int main() {
                     cin >> calificacion;
 
                     if (calificacion < 0 || calificacion > 10) {
-                        cout << "La calificacion debe estar entre 0 y 10." << endl;
+                        cout << "-----------------------------La calificacion debe estar entre 0 y 10.-----------------------------" << endl;
                         i--;
                         continue;
                     }
@@ -68,7 +102,7 @@ int main() {
 
             case 2: {
                 if (!estudianteRegistrado) {
-                    cout << "No se han registrado calificaciones." << endl;
+                    cout << "-----------------------------No se han registrado calificaciones.-----------------------------" << endl;
                     break;
                 }
 

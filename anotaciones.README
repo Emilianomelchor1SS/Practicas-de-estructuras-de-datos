@@ -1,0 +1,12 @@
+-Añadi limits para evitar errores en los ciclos y entradas
+-tratar de evitar que el pograma se rompa facilmente con entradas erroneas
+-tenemos pendientes los struct
+-sacamos al cin.ignore del ciclo para que no interfiera con las variables de intentos
+-nombre_estudiante.find_first_of("0123456789") != string::npos esta funcion ayuda a que el usuario no meta numeros
+-while(true ) es el ciclo principal, los do, nos serviran para validar las respuesta del usuario y en dado caso el usuario falle 3 veces volver al menu principal.
+-problema: en la linea donde inicia la validacion de el nombre del estudiante el programa al finalizar la cantidad de intentos por 
+el brak dentro del ciclo terminaba el do while lo que hacia que el programa pasara a la edad sin reiniciarse como se tenia 
+deseado, la solucion fue que una vez que se excedieran la cantidad de intentos y el ciclo do while se cerrara por niuestro break se 
+validara la cantidad de intentos para que si se excedia la cantidad de intentos se reiniciara la variable de intentos y 
+se hiciera un break para salir del case 1 y volver al menu principal.
+- notA:no se puede poner un cin.ignore(numeric_limits<streamsize>::max(), '\n'); dentro de los parentesis de un if por que funciona raro.
