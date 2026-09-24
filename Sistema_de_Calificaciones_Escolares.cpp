@@ -3,13 +3,16 @@
 #include <vector>
 using namespace std;
 #include <limits>// Limpiar el estado de error y descartar la entrada inválida
-
+  struct Estudiante {
+        string nombre_estudiante;
+        int edad_estudiante;
+        vector<float> calificaciones;
+    };
 int main() {
     int opcion;
-    string nombre_estudiante;
-    int edad_estudiante;
+    
+vector<Estudiante> listaEstudiantes;
     int cantidad_calificaciones;
-    vector<float> calificaciones;
     bool estudianteRegistrado = false;
     int repeticiones = 0; // Contador de repeticiones
 
@@ -26,13 +29,15 @@ int main() {
 
         switch (opcion) {
             case 1: {
+
                 cin.ignore();
+               Estudiante nuevoEstudiante;
                 do {
                     cout << "Ingrese el nombre del estudiante: ";
                   
-                    getline(cin, nombre_estudiante);
+                    getline(cin,nuevoEstudiante.nombre_estudiante);
 
-                    if (nombre_estudiante.find_first_of("0123456789") != string::npos) {
+                    if (nuevoEstudiante.nombre_estudiante.find_first_of("0123456789") != string::npos) {
                         cout << "-----------------------------Ingrese un nombre válido ----------------------------" << endl;
                         repeticiones++;
                         if (repeticiones >= 3) {
@@ -41,7 +46,7 @@ int main() {
                            
                         } 
                     }
-                }while (nombre_estudiante.find_first_of("0123456789") != string::npos && repeticiones < 3);
+                }while (nuevoEstudiante.nombre_estudiante.find_first_of("0123456789") != string::npos && repeticiones < 3);
                     if (repeticiones >= 3) {
                         repeticiones = 0; 
                         break;           
@@ -51,13 +56,13 @@ int main() {
                 repeticiones = 0; 
               
                 do{    cout << "Ingrese la edad del estudiante: ";
-                    cin >> edad_estudiante;
-                    if (edad_estudiante < 0 || edad_estudiante > 120|| cin.fail() ) {
+                    cin >> nuevoEstudiante.edad_estudiante;
+                    if (nuevoEstudiante.edad_estudiante < 0 || nuevoEstudiante.edad_estudiante > 120|| cin.fail() ) {
                         cout << "-----------------------------La edad debe estar entre 0 y 120.-----------------------------" << endl;
                         cin.clear();
                       cin.ignore(numeric_limits<streamsize>::max(), '\n');
                         repeticiones++;
-                        edad_estudiante = -1; // Reiniciar la edad para que el ciclo continúe
+                        nuevoEstudiante.edad_estudiante = -1; // Reiniciar la edad para que el ciclo continúe
                         if (repeticiones >= 3) {
                             cout << "-----------------------------Se ha excedido el número de intentos.-----------------------------" << endl;
                             break;
@@ -65,7 +70,7 @@ int main() {
 
 
                     }
-                }while (edad_estudiante < 0 || edad_estudiante > 120|| cin.fail());
+                }while (nuevoEstudiante.edad_estudiante < 0 || nuevoEstudiante.edad_estudiante > 120|| cin.fail());
                 if (repeticiones >= 3) {
                     repeticiones = 0; 
                     break;           
@@ -79,7 +84,7 @@ int main() {
                     break;
                 }
 
-                calificaciones.clear();
+                nuevoEstudiante.calificaciones.clear();
 
                 for (int i = 0; i < cantidad_calificaciones; i++) {
                     float calificacion;
@@ -90,29 +95,41 @@ int main() {
                         cout << "-----------------------------La calificacion debe estar entre 0 y 10.-----------------------------" << endl;
                         i--;
                         continue;
+                       
                     }
 
-                    calificaciones.push_back(calificacion);
+                    nuevoEstudiante.calificaciones.push_back(calificacion);
                 }
 
-                estudianteRegistrado = true;
+                listaEstudiantes.push_back(nuevoEstudiante);
                 cout << "Estudiante registrado correctamente." << endl;
                 break;
+              
+                
             }
 
             case 2: {
-                if (!estudianteRegistrado) {
-                    cout << "-----------------------------No se han registrado calificaciones.-----------------------------" << endl;
+                if (listaEstudiantes.empty()) {
+                    cout << "-----------------------------No se han registrado estudiantes.-----------------------------" << endl;
                     break;
                 }
 
-                float suma = 0;
-                for (float calificacion : calificaciones) {
-                    suma += calificacion;
-                }
+                cout << "\n===== LISTA DE ESTUDIANTES REGISTRADOS =====" << endl;
 
-                float promedio = suma / calificaciones.size();
-                cout << "El promedio del estudiante " << nombre_estudiante << " es: " << promedio << endl;
+                // Recorremos el vector con un ciclo for para mostrar a TODOS los estudiantes
+                for (size_t i = 0; i < listaEstudiantes.size(); i++) {
+                    float suma = 0;
+
+                    for (float calificacion : listaEstudiantes[i].calificaciones) {
+                        suma += calificacion;
+                    }
+
+                    float promedio = suma / listaEstudiantes[i].calificaciones.size();
+
+                    cout << i + 1 << ". Nombre: " << listaEstudiantes[i].nombre_estudiante 
+                         << " | Edad: " << listaEstudiantes[i].edad_estudiante 
+                         << " | Promedio: " << promedio << endl;
+                }
                 break;
             }
 

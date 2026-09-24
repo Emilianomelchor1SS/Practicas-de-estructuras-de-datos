@@ -1,7 +1,7 @@
 -Añadi limits para evitar errores en los ciclos y entradas
 -tratar de evitar que el pograma se rompa facilmente con entradas erroneas
 -tenemos pendientes los struct
--sacamos al cin.ignore del ciclo para que no interfiera con las variables de intentos
+-sacamos al cin.ignore del ciclo do para que no interfiera con las variables de intentos
 -nombre_estudiante.find_first_of("0123456789") != string::npos esta funcion ayuda a que el usuario no meta numeros
 -while(true ) es el ciclo principal, los do, nos serviran para validar las respuesta del usuario y en dado caso el usuario falle 3 veces volver al menu principal.
 -problema: en la linea donde inicia la validacion de el nombre del estudiante el programa al finalizar la cantidad de intentos por 
@@ -10,3 +10,8 @@ deseado, la solucion fue que una vez que se excedieran la cantidad de intentos y
 validara la cantidad de intentos para que si se excedia la cantidad de intentos se reiniciara la variable de intentos y 
 se hiciera un break para salir del case 1 y volver al menu principal.
 - notA:no se puede poner un cin.ignore(numeric_limits<streamsize>::max(), '\n'); dentro de los parentesis de un if por que funciona raro.
+- se entegro lo dispensable para el primer punto, se seguira con los structs y despues se terminara de validar el resto de las entradas del usuario.
+-Se añadieron los strucs tengo mucho sueño para todo lo nuevo aprendido y problemas pendientes, POO sirvio de mucho es el resumen  en como se llama 
+a una variable de un struc como si se llamara un objeto de una clase, se puede acceder a sus variables y funciones de la misma 
+manera, se puede crear un vector de strucs y recorrerlo con un for para acceder a sus variables y funciones.
+- si lee mis notas no me baje tantos puntos por la entrega tardia me complique de mas:(.
