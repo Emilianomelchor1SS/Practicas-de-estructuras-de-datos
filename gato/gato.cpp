@@ -4,9 +4,9 @@
 void construirtablero() {
     for( int i =0 ; i < 6;i++)
     {
-        for(int j =0 ; j < 3;j++)
+        for( int j =0 ; j < 3;j++)
         {
-            if (i % 2 ==1) {
+            if (i < 5 && i % 2 ==1) {
                 cout << "___";
             } else {
                 cout << "   ";
